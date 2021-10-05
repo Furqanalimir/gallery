@@ -1,39 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './assets/main.css';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Login from './component/Login'
-import ImageCard from './component/ImageCard';
+import ImageList from './component/ImageList';
 import Register from './component/Register'
 import ProductDetails from './component/ProductDetails';
+import { ContextProvider } from './context/Context'
+
 
 function App() {
-  const [ images, setImages ] = useState([]);
-  const [ isLoading, setIsLoading ] = useState(true);
-  const [ term, setTerm ] = useState('');
-
-  useEffect(() => {
-    fetch(`https://pixabay.com/api/?key=23669520-2f277a9ed0fcd622c08b78e41&q=${term}&image_type=photo&pretty=true`)
-      .then(res => res.json())
-      .then(data => {
-        setImages(data.hits);
-        setIsLoading(false);
-      })
-      .catch(err => console.error(err))
-  }, [])
 
   return (
-    <div className="container flex mx-auto px-4 my-6" >
+    <div className="container flex mx-auto px-2 my-2" >
       <Router>
-        <Switch>
-          <Route exact path={"/"} >
-            <ImageCard images={images} />
-          </Route>
-          <Route exact path={"/login"} component={Login} />
-          <Route exact path={"/register"} component={Register} />
-          <Route exact path={"/productdetails"} component={ProductDetails} />
-        </Switch>
+        <ContextProvider>
+          <Switch>
+            <Route exact path={"/"} component={ImageList} />
+            <Route exact path={"/login"} component={Login} />
+            <Route exact path={"/register"} component={Register} />
+            <Route exact path={"/productdetails"} component={ProductDetails} />
+          </Switch>
+        </ContextProvider>
       </Router>
-
     </div>
   );
 }

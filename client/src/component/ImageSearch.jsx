@@ -1,12 +1,36 @@
-import React from 'react'
+import React, { useState, useContext } from 'react';
+import { searchImage } from '../context/Action';
+import { Context } from '../context/Context';
 
 const ImageSearch = () => {
+
+  const { dispatch } = useContext(Context);
+
+  const [ term, setTerm ] = useState(null);
+
+  const handleChange = (e) => {
+    e.preventDefault()
+    setTerm({ ...term, [ e.target.name ]: e.target.value });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (term)
+    {
+      searchImage(dispatch, term)
+    }
+
+  }
+
   return (
     <div>
-      <form className="w-full max-w-sm">
-        <div className="flex items-center border-b border-b-2 border-teal-500 py-2 font-bold">
-          <input type="text" name="text"
+      <form className="w-full max-w-sm" onSubmit={handleSubmit}>
+        <div className="flex items-center border-b-2 border-teal-500 py-2 font-bold">
+          <input type="text"
+            name="term"
+            value={term}
             placeholder="Type image name"
+            onChange={(e) => handleChange(e)}
             className="appearance-none bg-transparent border-none w-full
                       text-gray-700 mr-3 py-1 px-4 leading-tight focus:outline-none"
           />
