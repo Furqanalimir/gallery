@@ -22,7 +22,7 @@ const HeaderSmall = () => {
     return (
         <div className="flex flex-col w-screen overflow-hidden justify-around px-2">
             <div className="flex mx-auto justify-between w-full px-2">
-                <p onClick={handleToggle} ><FiMenu className="font-bold w-8 h-12 flex" /></p>
+                <p ><FiMenu className="font-bold w-8 h-12 flex" onClick={handleToggle} /></p>
                 <ImageSearch />
             </div>
             {

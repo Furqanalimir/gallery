@@ -12,7 +12,7 @@ const Layout = (props) => {
       <div className="w-full">
         <Header />
       </div>
-      <div className="flex flex-row w-full justify-center mt-16 mx-auto">
+      <div className="flex flex-row w-full justify-center m-auto">
         {
           isLoading ? <h1 className="bg-yellow-300 p-4 rounded-lg animate-pulse fixed">
             Loading... </h1> : null
