@@ -5,6 +5,7 @@ import { getproductDetails, addList } from '../context/Action'
 import { CgLock } from 'react-icons/cg'
 import { saveAs } from 'file-saver';
 import { Link, Redirect } from 'react-router-dom';
+import spinner from './spinner/spinner.gif';
 
 const ProductDetails = (props) => {
 
@@ -47,11 +48,16 @@ const ProductDetails = (props) => {
       <div className="flex md:flex-row flex-col justify-around mt-24"
       >
         <div className="md:w-3/5 w-full">
-          <img src={url} alt="" className="" />
+          {
+            url ? <img src={url} alt="" className="" /> : <img src={spinner} alt="" />
+          }
         </div>
 
         <div className="md:w-1/3   py-6 w-full shadow-lg bg-blue-200">
-          <img src={prev} alt="" className="overflow-hidden mx-auto gb-local rounded-full h-24 w-24" />
+          {
+            prev ? <img src={prev} alt="" className="overflow-hidden mx-auto gb-local rounded-full h-24 w-24" /> :
+              <img src={spinner} alt="" className="overflow-hidden mx-auto gb-local rounded-full h-24 w-24" />
+          }
           <div className="my-4 bg-gray-200  px-12 overflow-hidden">
             <div className="overflow-hidden border-4  p-2">
               <p className="mx-auto text-gray-500">

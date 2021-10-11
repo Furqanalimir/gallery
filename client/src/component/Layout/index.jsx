@@ -4,8 +4,6 @@ import { Context } from '../../context/Context'
 
 const Layout = (props) => {
 
-
-
   const { isLoading, errList } = useContext(Context);
   return (
     <div className="flex-row w-screen">
