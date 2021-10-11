@@ -3,10 +3,18 @@ import Reducer from './Reducer';
 
 const initialState = {
   images: [],
+  name: '',
   isLoading: false,
+  searchLoading: false,
   isAuthenticated: false,
-  error: null,
-  errMessage: ''
+  authError: false,
+  errMessage: '',
+  searchResult: [],
+  searchError: false,
+  _productDetails: [],
+  id: null,
+  myList: [],
+  errList: null,
 }
 
 export const Context = createContext(initialState);
@@ -19,8 +27,15 @@ export const ContextProvider = ({ children }) => {
       images: state.images,
       isLoading: state.isLoading,
       isAuthenticated: state.isAuthenticated,
-      error: state.error,
+      name: state.name,
+      authError: state.authError,
       errMessage: state.errMessage,
+      searchResult: state.searchResult,
+      searchLoading: state.searchLoading,
+      _productDetails: state._productDetails,
+      searchError: state.searchError,
+      myList: state.myList,
+      errList: state.errList,
       dispatch
     }}
     >
