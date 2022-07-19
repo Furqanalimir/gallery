@@ -25,15 +25,17 @@ router.post('/register', [
   }
   try
   {
+    console.log("body",req.body)
     const { name, email, password } = req.body;
     let user = await User.findOne({ email: email });
     if (user)
     {
+      console.log("user exists")
       return res.status(400).send('User alredy exists')
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(password, salt);
+    const hashedPass = await bcrypt.hash(password, salt || "secretOrPrivateKey");
 
     user = new User({
       name,
@@ -53,7 +55,7 @@ router.post('/register', [
     return res.status(200).send({ name, token })
   } catch (err)
   {
-    console.log(err);
+    console.log("register Error",err?.message || err?.response?.data || err);
     return res.status(500).json('Server Error');
   }
 });
@@ -94,7 +96,7 @@ router.post('/login', [
     return res.status(200).send({ name: user.name, token })
   } catch (err)
   {
-    console.log('Server error', err)
+    console.log('login error', err?.message || err?.response?.data || err)
     return res.status(500).send('sever error')
   }
 });
@@ -108,6 +110,7 @@ router.get('/check', auth, (req, res) => {
     return res.status(200).send('token valid')
   } catch (err)
   {
+    console.log("check error", err?.message || err?.response?.data || err)
     return res.status(500).json('server error');
   }
 });
@@ -136,7 +139,7 @@ router.post('/mylist/add', auth, async (req, res) => {
     return res.status(200).json(myList);
   } catch (err)
   {
-    console.log(err)
+    console.log("add list error",err?.message || err?.response?.data || err);
     return res.status(500).json('server error');
   }
 
@@ -161,6 +164,7 @@ router.get('/mylist/get', auth, async (req, res) => {
     return res.status(200).json(id);
   } catch (err)
   {
+    console.log("mylist error", err?.message || err?.response?.data || err)
     return res.status(500).json('server error');
   }
 
@@ -192,7 +196,7 @@ router.delete('/mylist/remove/:id', auth, async (req, res) => {
     return res.status(200).json("Item Removed successfully");
   } catch (err)
   {
-    console.log(err);
+    console.log("remove from list", err?.message || err?.response?.data || err);
     return res.status(500).json('server error');
   }
 

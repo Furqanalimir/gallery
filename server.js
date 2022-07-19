@@ -3,7 +3,8 @@ const app = express();
 const connectDB = require('./config/db');
 const cors = require('cors');
 const path = require('path');
-
+const dotenv = require("dotenv");
+dotenv.config()
 //init middleware
 app.use(express.json())
 
@@ -14,7 +15,7 @@ connectDB();
 
 app.use('/api/user', require('./routes/auth'))
 
-if (process.env.NODE_ENV === 'production')
+if (process?.env?.NODE_ENV === 'production')
 {
   app.use(express.static(path.resolve(__dirname, 'client', 'build')));
   app.get('*', (req, res) => {
