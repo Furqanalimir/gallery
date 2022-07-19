@@ -27,7 +27,7 @@ router.post('/register', [
   {
     console.log("body",req.body)
     const { name, email, password } = req.body;
-    let user = await User.findOne({ email: email });
+    let user = await User.findOne({ email });
     if (user)
     {
       console.log("user exists")
@@ -35,7 +35,7 @@ router.post('/register', [
     }
 
     const salt = await bcrypt.genSalt(10);
-    const hashedPass = await bcrypt.hash(password, salt || "secretOrPrivateKey");
+    const hashedPass = await bcrypt.hash(password, salt);
 
     user = new User({
       name,
@@ -56,7 +56,7 @@ router.post('/register', [
   } catch (err)
   {
     console.log("register Error",err?.message || err?.response?.data || err);
-    return res.status(500).json('Server Error');
+    return res.status(500).json({error: err?.message || err?.response?.data || err});
   }
 });
 
@@ -97,7 +97,7 @@ router.post('/login', [
   } catch (err)
   {
     console.log('login error', err?.message || err?.response?.data || err)
-    return res.status(500).send('sever error')
+    return res.status(500).send({error: err?.message || err?.response?.data || err})
   }
 });
 
@@ -111,7 +111,7 @@ router.get('/check', auth, (req, res) => {
   } catch (err)
   {
     console.log("check error", err?.message || err?.response?.data || err)
-    return res.status(500).json('server error');
+    return res.status(500).json({error: err?.message || err?.response?.data || err});
   }
 });
 
@@ -140,7 +140,7 @@ router.post('/mylist/add', auth, async (req, res) => {
   } catch (err)
   {
     console.log("add list error",err?.message || err?.response?.data || err);
-    return res.status(500).json('server error');
+    return res.status(500).json({error: err?.message || err?.response?.data || err});
   }
 
 });
@@ -165,7 +165,7 @@ router.get('/mylist/get', auth, async (req, res) => {
   } catch (err)
   {
     console.log("mylist error", err?.message || err?.response?.data || err)
-    return res.status(500).json('server error');
+    return res.status(500).json({error: err?.message || err?.response?.data || err});
   }
 
 })
@@ -197,7 +197,7 @@ router.delete('/mylist/remove/:id', auth, async (req, res) => {
   } catch (err)
   {
     console.log("remove from list", err?.message || err?.response?.data || err);
-    return res.status(500).json('server error');
+    return res.status(500).json({error: err?.message || err?.response?.data || err});
   }
 
 })
