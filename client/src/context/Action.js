@@ -1,5 +1,5 @@
 import axios from 'axios';
-const HOST = ""||"https://localhost:5000";
+const HOST = ""//||"https://localhost:5000";
 
 export const getImages = async (dispatch) => {
 
