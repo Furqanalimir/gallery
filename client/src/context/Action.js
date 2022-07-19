@@ -1,4 +1,5 @@
 import axios from 'axios';
+const HOST = "https://localhost:5000";
 
 export const getImages = async (dispatch) => {
 
@@ -14,8 +15,7 @@ export const getImages = async (dispatch) => {
       payload: data
     })
 
-  } catch (err)
-  {
+  } catch (err){
     console.log('action getImages', err);
 
   }
@@ -42,8 +42,7 @@ export const searchImage = async (dispatch, { term }) => {
       })
     }
 
-  } catch (err)
-  {
+  } catch (err){
     dispatch({
       type: 'SEARCH_TERM_ERROR'
     })
@@ -56,17 +55,17 @@ export const LoginUser = async (details, dispatch) => {
   try
   {
 
-    const { data } = await axios.post('http://localhost:5000/api/user/login', details)
+    const { data } = await axios.post(`${HOST}/api/user/login`, details)
 
     dispatch({
       type: 'LOGIN_USER',
       payload: data
     })
-  } catch (err)
-  {
+  } catch (err){
+    console.log("loginUser",err)
     dispatch({
       type: 'LOGIN_USER_ERROR',
-      payload: err.response.data
+      payload: err & err.response & err.response.data ||  "something went wrong"
     })
   }
 };
@@ -78,11 +77,11 @@ export const LogoutUser = (dispatch) => {
     dispatch({
       type: 'LOGOUT_USER'
     })
-  } catch (err)
-  {
+  } catch (err){
+    console.log("logout", err);
     dispatch({
       type: 'LOGOUT_USER_ERROR',
-      payload: err.response.data
+      payload: err & err.response & err.response.data ||  "something went wrong" 
     })
   }
 };
@@ -91,17 +90,16 @@ export const RegisterUser = async (details, dispatch) => {
   try
   {
     dispatch({ type: 'REGISTER_USER_REQUEST' });
-    const res = await axios.post("http://localhost:5000/api/user/register", details);
+    const res = await axios.post(`${HOST}/api/user/register`, details);
     dispatch({
       type: 'REGISTER_USER',
       payload: res.data,
     })
-  } catch (err)
-  {
-    console.log(err.response.data)
+  } catch (err){
+    console.log("register user",err)
     dispatch({
       type: 'REGISTER__USER_ERROR',
-      payload: err.response.data
+      payload: err & err.response & err.response.data ||  "something went wrong" 
     })
   }
 };
@@ -116,8 +114,7 @@ export const getproductDetails = async (dispatch, id) => {
       type: 'PRODUCT_DETAILS',
       payload: data.hits
     })
-  } catch (err)
-  {
+  } catch (err){
     console.log('action getproductDetails', err);
   }
 
@@ -128,14 +125,13 @@ export const checkAuth = async (dispatch) => {
   {
     const token = localStorage.getItem('token');
 
-    await axios.get('http://localhost:5000/api/user/check', {
+    await axios.get(`${HOST}/api/user/check`, {
       headers: {
         'x-auth-token': `${token}`
       }
     });
 
-  } catch (err)
-  {
+  } catch (err){
     dispatch({
       type: 'LOGOUT_USER'
     })
@@ -154,7 +150,7 @@ export const getMylist = async (dispatch) => {
         'x-auth-token': token
       }
     }
-    const res = await axios.get('http://localhost:5000/api/user/mylist/get', config);
+    const res = await axios.get(`${HOST}/api/user/mylist/get`, config);
 
     const data = [];
     for (let i = 0; i < res.data.length; i++)
@@ -168,9 +164,8 @@ export const getMylist = async (dispatch) => {
       payload: data
     })
 
-  } catch (err)
-  {
-    console.log('action 150', err);
+  } catch (err){
+    console.log('get my list', err);
     dispatch({
       type: 'ERROR_GET_MYLIST'
     })
@@ -187,16 +182,16 @@ export const addList = async (dispatch, id) => {
         'x-auth-token': token
       }
     }
-    const { data } = await axios.post('http://localhost:5000/api/user/mylist/add', { id }, config)
+    const { data } = await axios.post(`${HOST}/api/user/mylist/add`, { id }, config)
     dispatch({
       type: 'ADD_ITEM_MYLIST',
       payload: data
     })
-  } catch (err)
-  {
+  } catch (err){
+    console.log("add to list", err)
     dispatch({
       type: 'ERROR_ADD_ITEM_MYLIST',
-      payload: err.response.data
+      payload: err & err.response & err.response.data ||  "something went wrong" 
     })
   }
 };
@@ -210,16 +205,16 @@ export const removeList = async (dispatch, id) => {
         'x-auth-token': token
       }
     }
-    const { data } = await axios.delete(`http://localhost:5000/api/user/mylist/remove/${id}`, config)
+    const { data } = await axios.delete(`${HOST}/api/user/mylist/remove/${id}`, config)
     dispatch({
       type: 'REMOVE_ITEM_MYLIST',
       payload: data
     })
-  } catch (err)
-  {
+  } catch (err){
+    console.log("remove from list", err)
     dispatch({
       type: 'ERROR_REMOVE_ITEM_MYLIST',
-      payload: err.response.data,
+      payload: err & err.response & err.response.data ||  "something went wrong" ,
     })
   }
 }
