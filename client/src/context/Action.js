@@ -1,4 +1,5 @@
 import axios from 'axios';
+const HOST = "https://localhost:5000";
 
 export const getImages = async (dispatch) => {
 
@@ -56,7 +57,7 @@ export const LoginUser = async (details, dispatch) => {
   try
   {
 
-    const { data } = await axios.post('http://localhost:5000/api/user/login', details)
+    const { data } = await axios.post(`${HOST}/api/user/login`, details)
 
     dispatch({
       type: 'LOGIN_USER',
@@ -91,7 +92,7 @@ export const RegisterUser = async (details, dispatch) => {
   try
   {
     dispatch({ type: 'REGISTER_USER_REQUEST' });
-    const res = await axios.post("http://localhost:5000/api/user/register", details);
+    const res = await axios.post(`${HOST}/api/user/register`, details);
     dispatch({
       type: 'REGISTER_USER',
       payload: res.data,
@@ -128,7 +129,7 @@ export const checkAuth = async (dispatch) => {
   {
     const token = localStorage.getItem('token');
 
-    await axios.get('http://localhost:5000/api/user/check', {
+    await axios.get(`${HOST}/api/user/check`, {
       headers: {
         'x-auth-token': `${token}`
       }
@@ -154,7 +155,7 @@ export const getMylist = async (dispatch) => {
         'x-auth-token': token
       }
     }
-    const res = await axios.get('http://localhost:5000/api/user/mylist/get', config);
+    const res = await axios.get(`${HOST}/api/user/mylist/get`, config);
 
     const data = [];
     for (let i = 0; i < res.data.length; i++)
@@ -187,7 +188,7 @@ export const addList = async (dispatch, id) => {
         'x-auth-token': token
       }
     }
-    const { data } = await axios.post('http://localhost:5000/api/user/mylist/add', { id }, config)
+    const { data } = await axios.post(`${HOST}/api/user/mylist/add`, { id }, config)
     dispatch({
       type: 'ADD_ITEM_MYLIST',
       payload: data
@@ -210,7 +211,7 @@ export const removeList = async (dispatch, id) => {
         'x-auth-token': token
       }
     }
-    const { data } = await axios.delete(`http://localhost:5000/api/user/mylist/remove/${id}`, config)
+    const { data } = await axios.delete(`${HOST}/api/user/mylist/remove/${id}`, config)
     dispatch({
       type: 'REMOVE_ITEM_MYLIST',
       payload: data
