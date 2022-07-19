@@ -15,8 +15,7 @@ export const getImages = async (dispatch) => {
       payload: data
     })
 
-  } catch (err)
-  {
+  } catch (err){
     console.log('action getImages', err);
 
   }
@@ -43,8 +42,7 @@ export const searchImage = async (dispatch, { term }) => {
       })
     }
 
-  } catch (err)
-  {
+  } catch (err){
     dispatch({
       type: 'SEARCH_TERM_ERROR'
     })
@@ -63,11 +61,11 @@ export const LoginUser = async (details, dispatch) => {
       type: 'LOGIN_USER',
       payload: data
     })
-  } catch (err)
-  {
+  } catch (err){
+    console.log("loginUser",err)
     dispatch({
       type: 'LOGIN_USER_ERROR',
-      payload: err.response.data
+      payload: err & err.response & err.response.data ||  "something went wrong"
     })
   }
 };
@@ -79,11 +77,11 @@ export const LogoutUser = (dispatch) => {
     dispatch({
       type: 'LOGOUT_USER'
     })
-  } catch (err)
-  {
+  } catch (err){
+    console.log("logout", err);
     dispatch({
       type: 'LOGOUT_USER_ERROR',
-      payload: err.response.data
+      payload: err & err.response & err.response.data ||  "something went wrong" 
     })
   }
 };
@@ -97,12 +95,11 @@ export const RegisterUser = async (details, dispatch) => {
       type: 'REGISTER_USER',
       payload: res.data,
     })
-  } catch (err)
-  {
-    console.log(err.response.data)
+  } catch (err){
+    console.log("register user",err)
     dispatch({
       type: 'REGISTER__USER_ERROR',
-      payload: err.response.data
+      payload: err & err.response & err.response.data ||  "something went wrong" 
     })
   }
 };
@@ -117,8 +114,7 @@ export const getproductDetails = async (dispatch, id) => {
       type: 'PRODUCT_DETAILS',
       payload: data.hits
     })
-  } catch (err)
-  {
+  } catch (err){
     console.log('action getproductDetails', err);
   }
 
@@ -135,8 +131,7 @@ export const checkAuth = async (dispatch) => {
       }
     });
 
-  } catch (err)
-  {
+  } catch (err){
     dispatch({
       type: 'LOGOUT_USER'
     })
@@ -169,9 +164,8 @@ export const getMylist = async (dispatch) => {
       payload: data
     })
 
-  } catch (err)
-  {
-    console.log('action 150', err);
+  } catch (err){
+    console.log('get my list', err);
     dispatch({
       type: 'ERROR_GET_MYLIST'
     })
@@ -193,11 +187,11 @@ export const addList = async (dispatch, id) => {
       type: 'ADD_ITEM_MYLIST',
       payload: data
     })
-  } catch (err)
-  {
+  } catch (err){
+    console.log("add to list", err)
     dispatch({
       type: 'ERROR_ADD_ITEM_MYLIST',
-      payload: err.response.data
+      payload: err & err.response & err.response.data ||  "something went wrong" 
     })
   }
 };
@@ -216,11 +210,11 @@ export const removeList = async (dispatch, id) => {
       type: 'REMOVE_ITEM_MYLIST',
       payload: data
     })
-  } catch (err)
-  {
+  } catch (err){
+    console.log("remove from list", err)
     dispatch({
       type: 'ERROR_REMOVE_ITEM_MYLIST',
-      payload: err.response.data,
+      payload: err & err.response & err.response.data ||  "something went wrong" ,
     })
   }
 }

@@ -97,7 +97,7 @@ router.post('/login', [
   } catch (err)
   {
     console.log('login error', err?.message || err?.response?.data || err)
-    return res.status(500).send({error: err?.message || err?.response?.data || err})
+    return res.status(500).send({error: err})
   }
 });
 
