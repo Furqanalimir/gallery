@@ -10,6 +10,7 @@ on:
 env:
   MONGO_URI: Monday
   NODE_ENV: development
+  USER_KEY: nouserkey
   
 jobs:
   build:
