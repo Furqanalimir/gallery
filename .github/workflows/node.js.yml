@@ -19,19 +19,21 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x, 16.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v3
-    - uses: vimtor/action-zip@v1
+    - uses: vimtor/action-zip@v1  #only module required to convert to zip
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       
       with:
         node-version: ${{ matrix.node-version }}
-        files: convertToZip.yaml 
-        dest: convertToZip.zip
+#        files: convertToZip.yaml 
+#        dest: convertToZip.zip
         cache: 'npm'
+    - run: echo "alright let's get this started"
+    - run: zip -r resease.zip
     - run: npm ci
     - run: npm run build --if-present
