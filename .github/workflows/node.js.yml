@@ -32,6 +32,6 @@ jobs:
         files: convertToZip.yaml 
         dest: convertToZip.zip
         cache: 'npm'
-    - run: eco "alright let's get this started"
+    - run: echo "alright let's get this started"
     - run: npm ci
     - run: npm run build --if-present
