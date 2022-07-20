@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
     
 env:
-  MONGO_URI: Monday
+  MONGO_URI: mongodb+srv://test:hfFcuLcpjEE8YT0T@falcon.igga6.mongodb.net/test?retryWrites=true&w=majority
   NODE_ENV: development
   USER_KEY: nouserkey
   
@@ -20,5 +20,5 @@ jobs:
       - uses: vimtor/action-zip@v1
         with:
           files: manifest.json
-          dest: ziped/result.zip
-      - run: npm run start
+          dest: result.zip
+      - run: npm ci
