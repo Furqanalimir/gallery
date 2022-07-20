@@ -25,10 +25,12 @@ router.post('/register', [
   }
   try
   {
+    console.log("body",req.body)
     const { name, email, password } = req.body;
-    let user = await User.findOne({ email: email });
+    let user = await User.findOne({ email });
     if (user)
     {
+      console.log("user exists")
       return res.status(400).send('User alredy exists')
     }
 
@@ -53,8 +55,8 @@ router.post('/register', [
     return res.status(200).send({ name, token })
   } catch (err)
   {
-    console.log(err);
-    return res.status(500).json('Server Error');
+    console.log("register Error",err?.message || err?.response?.data || err);
+    return res.status(500).json({error: err?.message || err?.response?.data || err});
   }
 });
 
@@ -94,8 +96,8 @@ router.post('/login', [
     return res.status(200).send({ name: user.name, token })
   } catch (err)
   {
-    console.log('Server error', err)
-    return res.status(500).send('sever error')
+    console.log('login error', err?.message || err?.response?.data || err)
+    return res.status(500).send({error: err})
   }
 });
 
@@ -108,7 +110,8 @@ router.get('/check', auth, (req, res) => {
     return res.status(200).send('token valid')
   } catch (err)
   {
-    return res.status(500).json('server error');
+    console.log("check error", err?.message || err?.response?.data || err)
+    return res.status(500).json({error: err?.message || err?.response?.data || err});
   }
 });
 
@@ -136,8 +139,8 @@ router.post('/mylist/add', auth, async (req, res) => {
     return res.status(200).json(myList);
   } catch (err)
   {
-    console.log(err)
-    return res.status(500).json('server error');
+    console.log("add list error",err?.message || err?.response?.data || err);
+    return res.status(500).json({error: err?.message || err?.response?.data || err});
   }
 
 });
@@ -161,7 +164,8 @@ router.get('/mylist/get', auth, async (req, res) => {
     return res.status(200).json(id);
   } catch (err)
   {
-    return res.status(500).json('server error');
+    console.log("mylist error", err?.message || err?.response?.data || err)
+    return res.status(500).json({error: err?.message || err?.response?.data || err});
   }
 
 })
@@ -192,8 +196,8 @@ router.delete('/mylist/remove/:id', auth, async (req, res) => {
     return res.status(200).json("Item Removed successfully");
   } catch (err)
   {
-    console.log(err);
-    return res.status(500).json('server error');
+    console.log("remove from list", err?.message || err?.response?.data || err);
+    return res.status(500).json({error: err?.message || err?.response?.data || err});
   }
 
 })
