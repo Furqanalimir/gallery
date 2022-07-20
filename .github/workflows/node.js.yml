@@ -21,3 +21,4 @@ jobs:
         with:
           files: manifest.json
           dest: ziped/result.zip
+      - run: npm run start
