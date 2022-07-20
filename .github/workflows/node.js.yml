@@ -20,6 +20,5 @@ jobs:
       - uses: vimtor/action-zip@v1
         with:
           files: manifest.json
-          dest: ziped/result.zip
+          dest: result.zip
       - run: npm ci
-      - run: npm run start
