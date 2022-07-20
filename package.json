@@ -18,6 +18,7 @@
     "start": "node server",
     "server": "nodemon server",
     "client": "npm start --prefix client",
+    "build":"npm run build",
     "dev": "concurrently \"npm run server\"  \"npm run client\" "
   },
   "keywords": [],
