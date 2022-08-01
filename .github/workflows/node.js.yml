@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
     
 env:
-  MONGO_URI: mongodb+srv://test:hfFcuLcpjEE8YT0T@falcon.igga6.mongodb.net/test?retryWrites=true&w=majority
+  MONGO_URI: localhost
   NODE_ENV: development
   USER_KEY: nouserkey
   
