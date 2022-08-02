@@ -16,9 +16,11 @@ jobs:
   zip-files:
     runs-on: ubuntu-latest
     steps:
+      - uses: montudor/action-zip@v1
       - uses: actions/checkout@v2
       - uses: vimtor/action-zip@v1
         with:
+          args: zip -qq -r src.zip dir
           files: manifest.json
           dest: result.zip
       - run: npm ci
